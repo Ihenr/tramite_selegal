@@ -1,0 +1,18 @@
+table {
+    width: 100%;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+table tr {
+    /*text-align:center; */
+    background: #88ccf1;
+
+    font-size: 14px;
+}
+
+table td {
+    border-top: none;
+    border: .3px solid #929292;
+    font-size: 13px;
+}
