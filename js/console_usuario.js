@@ -453,10 +453,100 @@ function Modificar_Estatus_Usuario(id, estatus, user) {
     }
   });
 }
+function datosusuario() {
+  var id = $("#txtprincipalid").val();
 
-///===========seguimiento del trtamite
+  $.ajax({
+    type: "post",
+    url: "../controller/usuario/controlador_cargar_datos_usuario.php",
+    dataType: "JSON",
+    data: {
+      id: id,
+    },
+    success: function (resp) {
+      //console.log(resp['data']['0']);
+      document.getElementById("usuario_nom").text =
+        resp["data"]["0"]["Nom_ape"];
+    },
+  });
+}
 
 function validar_email(email) {
   let regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   return regex.test(email) ? true : false;
+}
+
+function notificaciones() {
+  $.ajax({
+    type: "post",
+    url: "../controller/usuario/controlador_cargar_notificaciones.php",
+    dataType: "JSON",
+    data: {},
+    success: function (resp) {
+      if (resp.data && resp.data.length > 0) {
+        $("#notificacion").text(
+          resp.data.length === 0 ? "0" : resp.data.length
+        );
+
+        // Limpiar el contenido actual del dropdown-menu
+        $(".dropdown-menu").empty();
+
+        // Iterar sobre los datos y agregar dinámicamente los elementos <a>
+        if (resp.data.length > 0) {
+          resp.data.forEach(function (notificacion) {
+            // Crear el elemento <a> con la clase dropdown-item
+            var link = $("<a>").addClass("dropdown-item");
+
+            // Crear la estructura interna del elemento <a>
+            var mediaDiv = $("<div>").addClass("media");
+            var mediaBodyDiv = $("<div>").addClass("media-body");
+
+            // Convertir la hora de formato de 24 horas a 12 horas
+            var hora24 = notificacion.rec_hora.split(":");
+            var horas = parseInt(hora24[0]);
+            var minutos = hora24[1];
+            var ampm = horas >= 12 ? "p.m." : "a.m.";
+            horas = horas % 12;
+            horas = horas ? horas : 12; // Hora "0" debe mostrar "12"
+            var hora12 = horas + ":" + minutos + " " + ampm;
+
+            // Agregar el contenido de la notificación
+            mediaBodyDiv.append(
+              "<h3 class='dropdown-item-title text'><i class='fas fa-chevron-right'></i><b>" +
+                notificacion.inst_nombre +
+                "</b></h3>"
+            );
+            mediaBodyDiv.append(
+              "<p class='text-sm'>" + notificacion.pro_cliente + "</p>"
+            );
+            mediaBodyDiv.append(
+              "<p class='text-sm text-muted'><i class='far fa-clock mr-1'></i>" +
+                notificacion.rec_fechacreacion +
+                " - " +
+                hora12 +
+                "</p>"
+            );
+            mediaDiv.append(mediaBodyDiv);
+            link.append(mediaDiv);
+            $(".dropdown-menu").append(link);
+
+            // Agregar un separador después de cada elemento <a> excepto el último
+            if (resp.data.indexOf(notificacion) !== resp.data.length - 1) {
+              $(".dropdown-menu").append(
+                "<div class='dropdown-divider'></div>"
+              );
+            }
+          });
+        } else {
+          $(".dropdown-menu").append(
+            "<a class='dropdown-item'>No hay notificaciones</a>"
+          );
+        }
+      } else {
+        $(".dropdown-menu").append(
+          "<a class='dropdown-item'>No hay notificaciones</a>"
+        );
+      }
+    },
+  });
 }

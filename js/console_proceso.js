@@ -91,7 +91,7 @@ function listar_proceso() {
       });
   });
 }
-function listar_proceso_Institucion(id) {
+function listar_proceso_institucion(id) {
   tbl_area = $("#tabla_proceso").DataTable({
     ordering: false,
     bLengthChange: true,
@@ -105,31 +105,81 @@ function listar_proceso_Institucion(id) {
     async: false,
     processing: true,
     ajax: {
-      url: "../controller/proceso/proceso_institucion/controlador_listar_proceso_institucion.php",
+      url: "../controller/proceso/controlador_listar_proceso_institucion.php",
       type: "POST",
       data: {
         id: id,
       },
-      success: function (data) {
-        console.log(data); // Muestra los datos recibidos por consola
-      },
-      error: function (xhr, status, error) {
-        console.error(xhr.responseText); // Muestra el mensaje de error en caso de fallo
-      },
     },
-    columns: [{ defaultContent: "" }, { data: "inst_nombre" }],
+    columns: [
+      {
+        data: null,
+        render: function (data, type, row, meta) {
+          return meta.row + 1; // Devuelve el número secuencial
+        }, // Título de la columna
+      },
+      { data: "inst_nombre" },
+      { data: "pro_numproceso" },
+      { data: "pro_tipoinfraccion" },
+      { data: "pro_cliente" },
+      { data: "pro_estadoproceso" },
+      {
+        data: "pro_costototal",
+        render: function (data, type, row) {
+          return "$" + data; // Agrega el símbolo de dólar al principio del valor
+        },
+      },
+      {
+        data: "pro_abono",
+        render: function (data, type, row) {
+          return (
+            "$" +
+            data +
+            "<br><button class='abono btn btn-success btn-xs'><i class='fas fa-list-ul'></i></button>"
+          ); // Agrega el símbolo de dólar al principio del valor
+        },
+      },
+      {
+        // Aquí definimos la última columna que mostrará la resta de  pro_costototal- abono
+        data: null,
+        render: function (data, type, row) {
+          var sumaExtrasYCostoTotal =
+            parseFloat(row.pro_costototal) - parseFloat(row.pro_abono);
+          return "$" + sumaExtrasYCostoTotal.toFixed(2); // Redondeamos a 2 decimales
+        },
+      },
+      {
+        data: "pro_extras",
+        render: function (data, type, row) {
+          return (
+            "$" +
+            data +
+            " <br> <button class='extras btn btn-success btn-xs'><i class='fas fa-list-ul'></i></button>"
+          ); // Agrega el símbolo de dólar al principio del valor
+        },
+      },
+      {
+        // Aquí definimos la última columna que mostrará la suma de pro_extras y pro_costototal
+        data: null,
+        render: function (data, type, row) {
+          var sumaExtrasYCostoTotal =
+            parseFloat(row.pro_extras) + parseFloat(row.pro_costototal);
+          return "$" + sumaExtrasYCostoTotal.toFixed(2); // Redondeamos a 2 decimales
+        },
+      },
+      {
+        data: "pro_estado",
+        render: function (data, type, row) {
+          if (data == "ACTIVO") {
+            return "<button class='editar btn btn-primary btn-xs'><i class='fa fa-edit'></i></button> &nbsp <button class='mas btn btn-danger btn-xs'><i class='fa fa-plus'> </i></button>&nbsp &nbsp &nbsp <span class='badge bg-success' style='font-size: 9px;'>ACTIVO</span>";
+          } else {
+            return "&nbsp &nbsp <button class='mas btn btn-danger btn-xs'><i class='fa fa-plus'> </i></button> <span class='badge bg-danger' style='font-size: 8px;'>FINALIZADO</span>";
+          }
+        },
+      },
+    ],
     language: idioma_espanol,
     select: true,
-  });
-  tbl_area.on("draw.td", function () {
-    var PageInfo = $("#tabla_proceso").DataTable().page.info();
-    console.log(PageInfo);
-    tbl_area
-      .column(0, { page: "current" })
-      .nodes()
-      .each(function (cell, i) {
-        cell.innerHTML = i + 1 + PageInfo.start;
-      });
   });
 }
 
@@ -332,6 +382,27 @@ function Modificar_Proceso() {
       "warning"
     );
   }
+  // registro de fecha y hora
+  let fecha = document.getElementById("txt_fecha").value;
+  let hora = document.getElementById("txt_hora").value;
+
+  if (fecha.trim() !== "") {
+    if (hora.trim() !== "") {
+      Registar_recordatorio();
+    } else {
+      return Swal.fire(
+        "Mensaje de Advertencia",
+        "Tiene que llenar tanto la fecha como la hora",
+        "warning"
+      );
+    }
+  } else if (hora.trim() !== "") {
+    return Swal.fire(
+      "Mensaje de Advertencia",
+      "Tiene que llenar tanto la fecha como la hora",
+      "warning"
+    );
+  }
 
   // Sumar los valores nuevos a los valores existentes
   let totalabono = abono + parseFloat(abono_actual);
@@ -366,6 +437,8 @@ function Modificar_Proceso() {
             document.getElementById("txt_abono_editar").value = "";
             document.getElementById("txt_gastos_editar").value = "";
             document.getElementById("txt_descripcion").value = "";
+            document.getElementById("txt_fecha").value = "";
+            document.getElementById("txt_hora").value = "";
           }
         );
       }
@@ -751,5 +824,42 @@ function listar_Extras(id) {
     ],
     language: idioma_espanol,
     select: true,
+  });
+}
+
+function Registar_recordatorio() {
+  let id = document.getElementById("txt_idproceso").value;
+  let fecha = document.getElementById("txt_fecha").value;
+  let hora = document.getElementById("txt_hora").value;
+
+  if (id.length == 0 || fecha.length == 0 || hora.length == 0) {
+    return Swal.fire({
+      icon: "warning",
+      title: "Mensaje de Advertencia",
+      text: "LLene los campos vacios",
+      heightAuto: false,
+    });
+  }
+
+  $.ajax({
+    url: "../controller/proceso/controlador_registro_fecha.php",
+    type: "POST",
+    data: {
+      id: id,
+      fecha: fecha,
+      hora: hora,
+    },
+  }).done(function (resp) {
+    if (resp > 0) {
+      if (resp == 1) {
+        Swal.fire(
+          "Mensaje de Confirmacion",
+          "Nuevo Recordatorio Registrada",
+          "success"
+        ).then((value) => {
+          tbl_area.ajax.reload();
+        });
+      }
+    }
   });
 }

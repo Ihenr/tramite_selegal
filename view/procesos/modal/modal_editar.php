@@ -38,11 +38,26 @@
             </select>
 
           </div>
+
+          <div class="col-12">
+            <br>
+            <label for="" style="font-size:small;"><i class="far fa-calendar-alt"></i> Recordatorio de las
+              audiencias</label>
+            <hr style="margin-top: 0;">
+          </div>
+          <div class="col-6">
+            <label for="" style="font-size:small;"><i class="fas fa-calendar-day"></i> Día</label>
+            <input type="date" class="form-control" id="txt_fecha">
+          </div>
+          <div class="col-6">
+            <label for="" style="font-size:small;"><i class="far fa-clock"></i> Hora</label>
+            <input type="time" class="form-control" id="txt_hora">
+          </div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
-        <button type="button" class="btn btn-primary" onclick="Modificar_Proceso()">MODIFICAR</button>
+        <button type="button" class="btn btn-primary" onclick="Modificar_Proceso()">GUARDAR</button>
       </div>
     </div>
   </div>

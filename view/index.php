@@ -29,7 +29,6 @@ if (!isset($_SESSION['S_ID'])) {
 
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
-
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <!-- Left navbar links -->
@@ -41,8 +40,19 @@ if (!isset($_SESSION['S_ID'])) {
           <a href="index.php" class="nav-link"><i class="fas fa-home"></i> INICIO</a>
         </li>
       </ul>
+
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
+        <!-- Messages Dropdown Menu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="far fa-bell"></i>
+            <span class="badge badge-danger navbar-badge" id="notificacion">0</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+
+          </div>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="fas fa-user-circle">&nbsp</i>
@@ -77,18 +87,15 @@ if (!isset($_SESSION['S_ID'])) {
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div class="image center">
-            <br>
-            <img src="img/selegal.jpg" class="img-circle" alt="Usuario" title="Usuario" id="img_img" style="width: 50px; height: 50px;">
+          <div class="image">
+            <img src="img/selegal.jpg" class="img-circle " alt="Usuario" title="Usuario" id="img_img" style="width: 50px; height: 50px;">
           </div>
           <div class="info">
-            <center>
-              <b>
-                <a onclick="cargar_contenido('contenido_principal','usuario/configuracion.php')" class="d-block" id="usuario_nom"></a>
-                <a class="d-block" id="area"> </a>
-              </b>
-              <a class="d-block" id="area" style="text-align:center;"><?php echo ($_SESSION['S_ROL']); ?>&nbsp </a>
-            </center>
+            <b>
+              <a onclick="cargar_contenido('contenido_principal','usuario/configuracion.php')" class="d-block" id="usuario_nom"></a>
+            </b>
+            <a class="d-block" id="area" style="text-align:center;"><?php echo ($_SESSION['S_ROL']); ?>&nbsp </a>
+
           </div>
         </div>
 
@@ -100,7 +107,7 @@ if (!isset($_SESSION['S_ID'])) {
             <!--///ADMINISTRADOR-->
             <?php if ($_SESSION['S_ROL'] == 'Administrador') { ?>
 
-              <!-- ///PROCESOS ACTIVOS Y FINALLIZADOS -->
+              <!-- ///PROCESOS INSTITUCION -->
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-file-signature"></i>
@@ -141,13 +148,13 @@ if (!isset($_SESSION['S_ID'])) {
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a onclick="cargar_contenido('contenido_principal','procesos/procesos/proceso_institucion/view_procesos_laboral.php')" class="nav-link">
+                    <a onclick="cargar_contenido('contenido_principal','procesos/proceso_institucion/view_procesos_familiar.php')" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
                       <p> FAMILIA</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a onclick="cargar_contenido('contenido_principal','procesos/procesos/proceso_institucion/view_procesos_constitucional.php')" class="nav-link">
+                    <a onclick="cargar_contenido('contenido_principal','procesos/proceso_institucion/view_procesos_constitucional.php')" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
                       <p> CONSTITUCIONAL</p>
                     </a>
@@ -175,12 +182,6 @@ if (!isset($_SESSION['S_ID'])) {
                     <a onclick="cargar_contenido('contenido_principal','procesos/view_procesos_finalizados.php')" class="nav-link">
                       <i class="fas fa-file-excel nav-icon"></i>
                       <p>Procesos Finalizados</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a onclick="cargar_contenido('contenido_principal','procesos/view_procesos.php')" class="nav-link">
-                      <i class="fas fa-file-alt nav-icon"></i>
-                      <p>Todos los Procesos</p>
                     </a>
                   </li>
 
@@ -217,6 +218,61 @@ if (!isset($_SESSION['S_ID'])) {
             <?php } ?>
             <!--///SECRETARIO-->
             <?php if ($_SESSION['S_ROL'] == 'Secretario') { ?>
+              <!-- ///PROCESOS INSTITUCION -->
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-file-signature"></i>
+                  <p>
+                    PROCESOS POR INSTITUCIONES
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a onclick="cargar_contenido('contenido_principal','procesos/proceso_institucion/view_procesos_penal.php')" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>PENAL</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a onclick="cargar_contenido('contenido_principal','procesos/proceso_institucion/view_procesos_civil.php')" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>CIVIL</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a onclick="cargar_contenido('contenido_principal','procesos/proceso_institucion/view_procesos_transito.php')" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>TRANSITO</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a onclick="cargar_contenido('contenido_principal','procesos/proceso_institucion/view_procesos_home.php')" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>HOME INMOBILIARIA</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a onclick="cargar_contenido('contenido_principal','procesos/proceso_institucion/view_procesos_laboral.php')" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>LABORAL</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a onclick="cargar_contenido('contenido_principal','procesos/proceso_institucion/view_procesos_familiar.php')" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p> FAMILIA</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a onclick="cargar_contenido('contenido_principal','procesos/proceso_institucion/view_procesos_constitucional.php')" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p> CONSTITUCIONAL</p>
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
               <!-- ///PROCESOS ACTIVOS Y FINALLIZADOS -->
               <li class="nav-item">
                 <a href="#" class="nav-link">
@@ -239,12 +295,6 @@ if (!isset($_SESSION['S_ID'])) {
                       <p>Procesos Finalizados</p>
                     </a>
                   </li>
-                  <li class="nav-item">
-                    <a onclick="cargar_contenido('contenido_principal','procesos/view_procesos.php')" class="nav-link">
-                      <i class="fas fa-file-alt nav-icon"></i>
-                      <p>Todos los Procesos</p>
-                    </a>
-                  </li>
 
                 </ul>
               </li>
@@ -253,10 +303,11 @@ if (!isset($_SESSION['S_ID'])) {
                 <a onclick="cargar_contenido('contenido_principal','procesos/view_procesos.php')" class="nav-link">
                   <i class="fas fa-file-alt nav-icon"></i>
                   <p>
-                    PROCESOS
+                    TODOS LOS PROCESOS
                   </p>
                 </a>
               </li>
+
             <?php } ?>
 
           </ul>
@@ -446,7 +497,7 @@ if (!isset($_SESSION['S_ID'])) {
 
                       <!-- INSTITUCIONES-->
                       <div class="col-lg-3 col-6">
-                        <div class="small-box bg-warning" onclick="cargar_contenido('contenido_principal','usuario/view_usuario.php')" style="cursor: pointer;">
+                        <div class="small-box bg-warning" onclick="cargar_contenido('contenido_principal','institucion/view_institucion.php')" style="cursor: pointer;">
                           <div class="inner">
                             <h3 id="lbl_institucio"><i class="fas fa-city nav-icon"></i></i></h3>
                             <p>INSTITUCIONES</p>
@@ -466,9 +517,7 @@ if (!isset($_SESSION['S_ID'])) {
                     <?php if ($_SESSION['S_ROL'] == 'Secretario') { ?>
                       <!-- INGRESAR PROCESO-->
                       <div class="col-lg-3 col-6">
-
                         <div class="small-box bg-success" onclick="cargar_contenido('contenido_principal','procesos/view_proceso_registro.php')" style="cursor: pointer;">
-
                           <div class="inner">
                             <h3 id="lbl_ingreso_a"><i class="fas fa-plus"></i> </h3>
                             <p>INGRESAR PROCESO</p>
@@ -479,22 +528,118 @@ if (!isset($_SESSION['S_ID'])) {
                           <a class="small-box-footer">
                             Ingresar Nuevo Proceso <i class="fas fa-arrow-circle-right"></i>
                           </a>
-
                         </div>
-
                       </div>
-                      <!-- INSTITUCIONES-->
+
+
+                      <!-- PENAL-->
                       <div class="col-lg-3 col-6">
-                        <div class="small-box bg-primary" onclick="cargar_contenido('contenido_principal','usuario/view_usuario.php')" style="cursor: pointer;">
+                        <div class="small-box bg-primary" onclick="cargar_contenido('contenido_principal','procesos/proceso_institucion/view_procesos_penal.php')" style="cursor: pointer;">
                           <div class="inner">
-                            <h3 id="lbl_institucio"><i class="fas fa-city"></i></h3>
-                            <p>INSTITUCIONES</p>
+                            <h3 id="lbl_institucio"><i class="fas fa-balance-scale"></i></h3>
+                            <p>PENAL</p>
                           </div>
                           <div class="icon">
-                            <i class="fas fa-city"></i>
+                            <i class="fas fa-balance-scale"></i>
                           </div>
                           <a class="small-box-footer">
-                            Ver Institucines <i class="fas fa-arrow-circle-right"></i>
+                            Ver Procesos Penales <i class="fas fa-arrow-circle-right"></i>
+                          </a>
+                        </div>
+                      </div>
+
+                      <!-- CIVIL-->
+                      <div class="col-lg-3 col-6">
+                        <div class="small-box bg-info" onclick="cargar_contenido('contenido_principal','procesos/proceso_institucion/view_procesos_civil.php')" style="cursor: pointer;">
+                          <div class="inner">
+                            <h3 id="lbl_institucio"><i class="fas fa-balance-scale"></i></i></h3>
+                            <p>CIVIL</p>
+                          </div>
+                          <div class="icon">
+                            <i class="fas fa-balance-scale"></i>
+                          </div>
+                          <a class="small-box-footer">
+                            Ver Procesos Civil <i class="fas fa-arrow-circle-right"></i>
+                          </a>
+                        </div>
+                      </div>
+
+                      <!-- TRANSITO-->
+                      <div class="col-lg-3 col-6">
+                        <div class="small-box bg-danger" onclick="cargar_contenido('contenido_principal','procesos/proceso_institucion/view_procesos_transito.php')" style="cursor: pointer;">
+                          <div class="inner">
+                            <h3 id="lbl_institucio"><i class="fas fa-balance-scale"></i></h3>
+                            <p>TRANSITO</p>
+                          </div>
+                          <div class="icon">
+                            <i class="fas fa-balance-scale"></i>
+                          </div>
+                          <a class="small-box-footer">
+                            Ver Procesos de Transito <i class="fas fa-arrow-circle-right"></i>
+                          </a>
+                        </div>
+                      </div>
+
+                      <!-- HOME INMOBILIARIA-->
+                      <div class="col-lg-3 col-6">
+                        <div class="small-box bg-secondary" onclick="cargar_contenido('contenido_principal','procesos/proceso_institucion/view_procesos_home.php')" style="cursor: pointer;">
+                          <div class="inner">
+                            <h3 id="lbl_institucio"><i class="fas fa-balance-scale"></i></h3>
+                            <p>HOME INMOBILIARIA</p>
+                          </div>
+                          <div class="icon">
+                            <i class="fas fa-balance-scale"></i>
+                          </div>
+                          <a class="small-box-footer">
+                            Ver Procesos Home Inmobiliaria <i class="fas fa-arrow-circle-right"></i>
+                          </a>
+                        </div>
+                      </div>
+
+                      <!-- LABORAL-->
+                      <div class="col-lg-3 col-6">
+                        <div class="small-box bg-purple" onclick="cargar_contenido('contenido_principal','procesos/proceso_institucion/view_procesos_laboral.php')" style="cursor: pointer;">
+                          <div class="inner">
+                            <h3 id="lbl_institucio"><i class="fas fa-balance-scale"></i></h3>
+                            <p>LABORAL</p>
+                          </div>
+                          <div class="icon">
+                            <i class="fas fa-balance-scale"></i>
+                          </div>
+                          <a class="small-box-footer">
+                            Ver Procesos Laboral <i class="fas fa-arrow-circle-right"></i>
+                          </a>
+                        </div>
+                      </div>
+
+                      <!-- FAMILIAR-->
+                      <div class="col-lg-3 col-6">
+                        <div class="small-box bg-lightblue" onclick="cargar_contenido('contenido_principal','procesos/proceso_institucion/view_procesos_familiar.php')" style="cursor: pointer;">
+                          <div class="inner">
+                            <h3 id="lbl_institucio"><i class="fas fa-balance-scale"></i></h3>
+                            <p>FAMILIAR</p>
+                          </div>
+                          <div class="icon">
+                            <i class="fas fa-balance-scale"></i>
+                          </div>
+                          <a class="small-box-footer">
+                            Ver Procesos Familiar <i class="fas fa-arrow-circle-right"></i>
+                          </a>
+                        </div>
+                      </div>
+
+                      <!-- CONSTITUCIONAL-->
+                      <div class="col-lg-3 col-6">
+                        <div class="small-box bg-teal" onclick="cargar_contenido('contenido_principal','procesos/proceso_institucion/view_procesos_constitucional.php')" style="cursor: pointer;">
+                          <div class="inner">
+                            <h3 id="lbl_institucio"><i class="fas fa-balance-scale"></i></i></h3>
+                            <p>CONSTITUCIONAL</p>
+                          </div>
+                          <div class="icon">
+                            <i class="fas fa-balance-scale"></i>
+                          </div>
+                          <a class="small-box-footer">
+                            Ver Procesos Constitucional <i class="fas fa-arrow-circle-right"></i>
                           </a>
                         </div>
                       </div>
@@ -555,67 +700,14 @@ if (!isset($_SESSION['S_ID'])) {
         "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
       }
-    }
-
-    function soloNumeros(e) {
-      tecla = (document.all) ? e.keyCode : e.which;
-      if (tecla == 8) {
-        return true;
-      }
-      // Patron de entrada, en este caso solo acepta numeros
-      patron = /[0-9]/;
-      tecla_final = String.fromCharCode(tecla);
-      return patron.test(tecla_final);
-    }
-
-    function soloLetras(e) {
-      key = e.keyCode || e.which;
-      tecla = String.fromCharCode(key).toLowerCase();
-      letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
-      especiales = "8-37-39-46";
-      tecla_especial = false
-      for (var i in especiales) {
-        if (key == especiales[i]) {
-          tecla_especial = true;
-          break;
-        }
-      }
-      if (letras.indexOf(tecla) == -1 && !tecla_especial) {
-        return false;
-      }
-
-    }
-
-    function filterFloat(evt, input) {
-      var key = window.Event ? evt.which : evt.keyCode;
-      var chark = String.fromCharCode(key);
-      var tempValue = input.value + chark;
-      if (key >= 48 && key <= 57) {
-        if (filter(tempValue) === false) {
-          return false;
-        } else {
-          return true;
-        }
-      } else {
-        if (key == 8 || key == 13 || key == 0) {
-          return true;
-        } else if (key == 46) {
-          if (filter(tempValue) === false) {
-            return false;
-          } else {
-            return true;
-          }
-        } else {
-          return false;
-        }
-      }
-    }
+    };
   </script>
   <!-- jQuery -->
   <script src="../plantilla/plugins/jquery/jquery.min.js"></script>
   <script src="../js/console_usuario.js?rev=<?php echo time(); ?>"></script>
   <script>
     window.onload = datosusuario();
+    window.onload = notificaciones();
   </script>
   <!-- Bootstrap 4 -->
   <script src="../plantilla/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -629,10 +721,6 @@ if (!isset($_SESSION['S_ID'])) {
 
   <!---select-->
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-  <script>
-    //////========Para los contadores 
-    Traer_widget();
-    Traer_widget2();
-  </script>
+
 
 </html>

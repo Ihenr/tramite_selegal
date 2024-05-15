@@ -201,4 +201,22 @@ class Modelo_Proceso extends conexionBD
         return $arreglo;
         conexionBD::cerrar_conexion();
     }
+
+    public function Registrar_Fecha($id, $fecha, $hora)
+    {
+        $c = conexionBD::conexionPDO();
+        $sql = "CALL SP_REGISTRAR_FECHA(?, ?, ?)";
+        $arreglo = array();
+        $query = $c->prepare($sql);
+
+        $query->bindParam(1, $id);
+        $query->bindParam(2, $fecha);
+        $query->bindParam(3, $hora);
+
+        $query->execute();
+        if ($row = $query->fetchColumn()) {
+            return $row;
+        }
+        conexionBD::cerrar_conexion();
+    }
 }

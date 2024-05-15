@@ -8,12 +8,12 @@
         <img src="img/Logo2.png" class="img-circle" width="50" height="50">
       </div><!-- /.col -->
       <div class="col-sm-6">
-        <h1 class="m-0">LISTADO DE PROCESOS PENAL</h1>
+        <h1 class="m-0">LISTADO DE PROCESO LABORAL</h1>
       </div><!-- /.col -->
       <div class="col-sm-5">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="index.php">INICIO</a></li>
-          <li class="breadcrumb-item active">Proceso Penal</li>
+          <li class="breadcrumb-item active">Proceso Laboral</li>
         </ol>
       </div><!-- /.col -->
     </div><!-- /.row -->
@@ -29,7 +29,7 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-header">
-            <h5 class="card-title"> Listado de Proceso Penal </h5>
+            <h5 class="card-title"> Listado de Proceso Laboral </h5>
             <button class="btn btn-danger btn-sm float-right" onclick="cargar_contenido('contenido_principal','procesos/view_proceso_registro.php')"> <i class="fas fa-plus"></i>&nbsp Nuevo Registro</button>
           </div>
           <div class="card-body">
@@ -79,6 +79,6 @@
 
 <script>
   $(document).ready(function() {
-    listar_proceso_institucion(1)
+    listar_proceso_institucion(5)
   });
 </script>
