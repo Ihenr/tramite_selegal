@@ -17,3 +17,8 @@ El sistema permite tener un registro de los tramites que se va realizando  como 
 ```sh
 git clone https://github.com/Ihenr/tramite_selegal
 cd tu-proyecto
+
+### Inicia el servidor web
+Inicia el servidor web y accede al proyecto a través de tu navegador:
+```sh
+http://localhost/tu-proyecto
