@@ -12,13 +12,33 @@ El sistema permite tener un registro de los tramites que se va realizando  como 
 
 ## Instalación
 
-### Clonar el repositorio
+### 1. Clonar el repositorio
 
 ```sh
 git clone https://github.com/Ihenr/tramite_selegal
 cd tu-proyecto
+```
+### 2. Crear la base de datos 
 
-### Inicia el servidor web
-Inicia el servidor web y accede al proyecto a través de tu navegador:
 ```sh
+CREATE DATABASE selegal;
+Exportar la base de datos que se encuentra en la carpeta db
+```
+### 3. Verificar la conexion a la base de datos  
+
+```sh
+- La conexión se encuentra en la carpeta model en el archivo model_conexion.php colocar su usuario y contraseña del servidor que disponga. 
+```
+
+### 4. Iniciar el servidor web
+
+```sh
+# Inicia el servidor web y accede al proyecto a través de tu navegador:
 http://localhost/tu-proyecto
+```
+### 3. Ingreso
+
+```sh
+USUARIO: admin
+PASSWORD: admin
+```
